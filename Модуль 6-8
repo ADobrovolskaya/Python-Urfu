@@ -1,0 +1,13 @@
+import pandas as pd
+from bs4 import BeautifulSoup
+import requests
+
+web = 'https://www.banki.ru/banks/ratings/'
+response = requests.get(web, headers={'User-Agent': 'Mozilla/5.0'})
+
+soup = BeautifulSoup(response.text, 'html.parser')
+
+tab = soup.find('table', {'data-test': 'rating-table'})
+
+df = pd.read_html(str(tab))[0]
+df
